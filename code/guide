@@ -1,0 +1,8 @@
+import psutil
+
+def get_cpu_temp():
+    temp = psutil.sensors_temperatures().get('coretemp', [])
+    if not temp:
+        return None
+    # `coretemp` sensor has multiple values, we take the average of all cores
+    return sum(sensor.current for sensor in temp) / len(temp)
